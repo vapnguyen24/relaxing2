@@ -170,6 +170,9 @@ var ParticlePool = (function() {
   return ParticlePool;
 })();
 
+var centerImage = new Image();
+centerImage.src = "image.png";
+
 /*
  * Putting it all together
  */
@@ -233,6 +236,28 @@ var ParticlePool = (function() {
     // clear canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
     
+    var imgSize = 100;
+var x = canvas.width / 2;
+var y = canvas.height / 2;
+
+context.save();
+
+// tạo vùng cắt hình tròn
+context.beginPath();
+context.arc(x, y, imgSize / 2, 0, Math.PI * 2);
+context.closePath();
+context.clip();
+
+// vẽ image
+context.drawImage(
+  centerImage,
+  x - imgSize / 2,
+  y - imgSize / 2,
+  imgSize,
+  imgSize
+);
+
+context.restore();
     // create new particles
     var amount = particleRate * deltaTime;
     for (var i = 0; i < amount; i++) {
